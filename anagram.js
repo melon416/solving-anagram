@@ -19,3 +19,38 @@ function solve(input) {
 }
 console.log(solve(["dog","cat","god","tac","act","bat"]));
 
+
+// second approach
+
+function checkTwo(str1, str2) {
+    if(str1.length !== str2.length) return false;
+    const data = {};
+    
+    for(let i = 0; i < str1.length; i ++) {
+        if(data[str1[i]] === undefined) data[str1[i]] = 0;
+        if(data[str2[i]] === undefined) data[str2[i]] = 0;
+        data[str1[i]] ++;
+        data[str2[i]] --;
+    }
+    
+    return Object.values(data).every(t => t === 0);
+}
+
+function solve(input) {
+    const result = [];
+    for(let i = 0; i < input.length; i ++) {
+        let exist = false;
+        for(let j = 0; j < result.length; j ++) {
+            if(checkTwo(result[j][0], input[i])) {
+                exist = true;
+                result[j].push(input[i]);
+                break;
+            }
+        }
+        if(exist === false) {
+            result.push([input[i]]);
+        }
+    }
+    return result;
+}
+console.log(solve(["dog","cat","god","tac","act","bat"]))
